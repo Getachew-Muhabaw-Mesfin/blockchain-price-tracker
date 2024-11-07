@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080" 
+    environment:
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - MORALIS_API_KEY=${MORALIS_API_KEY}
+      - ETH_CONTRACT_ADDRESS=${ETH_CONTRACT_ADDRESS}
+      - POLYGON_CONTRACT_ADDRESS=${POLYGON_CONTRACT_ADDRESS}
+      - BTC_CONTRACT_ADDRESS=${BTC_CONTRACT_ADDRESS}
+      - MAILTRAP_HOST=${MAILTRAP_HOST}
+      - MAILTRAP_PORT=${MAILTRAP_PORT}
+      - MAILTRAP_USERNAME=${MAILTRAP_USERNAME}
+      - MAILTRAP_PASSWORD=${MAILTRAP_PASSWORD}
+    depends_on:
+      - db
+    volumes:
+      - .:/usr/src/app
+    command: npm run start:prod
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
