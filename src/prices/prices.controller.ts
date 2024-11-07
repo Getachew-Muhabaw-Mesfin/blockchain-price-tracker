@@ -1,13 +1,7 @@
-import { Body, Controller, Get, HttpCode, Post, Query } from "@nestjs/common";
+import { Controller, Get, Query } from "@nestjs/common";
 import { PricesService } from "./prices.service";
 import { Price } from "./entities/price.entity";
-import {
-  ApiTags,
-  ApiOperation,
-  ApiResponse,
-  ApiBody,
-  ApiQuery,
-} from "@nestjs/swagger";
+import { ApiTags, ApiOperation, ApiResponse, ApiQuery } from "@nestjs/swagger";
 
 @ApiTags("Prices")
 @Controller("prices")
@@ -40,7 +34,9 @@ export class PricesController {
    * Fetches the price of tokens at 5-minute intervals.
    */
   @Get("5-minutely-prices")
-  @ApiOperation({ summary: "Fetch token prices at 5-minute intervals" })
+  @ApiOperation({
+    summary: "Fetched Automatically Saved Prices every 5 minute (CRONE JOB) ",
+  })
   @ApiQuery({
     name: "chain",
     required: false,
